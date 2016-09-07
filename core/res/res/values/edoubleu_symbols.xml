@@ -161,4 +161,7 @@
     <java-symbol type="anim" name="last_app_out" />
     <java-symbol type="string" name="app_killed_message" />
 
+    <!-- Whether device supports an alt. ambient display -->
+    <java-symbol type="bool" name="config_alt_ambient_display"/>
+
 </resources>
