@@ -155,6 +155,9 @@
     <!-- Whether Pixel props is enabled -->
     <bool name="config_enablePixelProps">true</bool>
 
+    <!-- Whether device supports an alt. ambient display -->
+    <bool name="config_alt_ambient_display">false</bool>
+
     <!-- These are system packages exempted from privacy indicator -->
     <string-array name="config_indicatorExemptedPackageNames" translatable="false">
         <item>com.android.bluetooth</item>
