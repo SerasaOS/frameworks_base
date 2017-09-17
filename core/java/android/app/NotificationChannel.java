@@ -151,6 +151,8 @@ public final class NotificationChannel implements Parcelable {
     private static final String ATT_IMPORTANCE = "importance";
     private static final String ATT_LIGHTS = "lights";
     private static final String ATT_LIGHT_COLOR = "light_color";
+    private static final String ATT_ON_TIME = "light_on_time";
+    private static final String ATT_OFF_TIME = "light_off_time";
     private static final String ATT_VIBRATION = "vibration";
     private static final String ATT_VIBRATION_EFFECT = "vibration_effect";
     private static final String ATT_VIBRATION_ENABLED = "vibration_enabled";
@@ -240,6 +242,8 @@ public final class NotificationChannel implements Parcelable {
     public static final int ALLOW_BUBBLE_OFF = 0;
 
     private static final int DEFAULT_LIGHT_COLOR = 0;
+    private static final int DEFAULT_ON_TIME = 0;
+    private static final int DEFAULT_OFF_TIME = 0;
     private static final int DEFAULT_VISIBILITY =
             NotificationManager.VISIBILITY_NO_OVERRIDE;
     private static final int DEFAULT_IMPORTANCE =
@@ -260,6 +264,8 @@ public final class NotificationChannel implements Parcelable {
     private boolean mSoundRestored = false;
     private boolean mLights;
     private int mLightColor = DEFAULT_LIGHT_COLOR;
+    private int mLightOnTime = DEFAULT_ON_TIME;
+    private int mLightOffTime = DEFAULT_OFF_TIME;
     private long[] mVibrationPattern;
     private VibrationEffect mVibrationEffect;
     // Bitwise representation of fields that have been changed by the user, preventing the app from
@@ -352,6 +358,8 @@ public final class NotificationChannel implements Parcelable {
         }
         mAudioAttributes = in.readInt() > 0 ? AudioAttributes.CREATOR.createFromParcel(in) : null;
         mLightColor = in.readInt();
+        mLightOnTime = in.readInt();
+        mLightOffTime = in.readInt();
         mBlockableSystem = in.readBoolean();
         mAllowBubbles = in.readInt();
         mOriginalImportance = in.readInt();
@@ -420,6 +428,8 @@ public final class NotificationChannel implements Parcelable {
             dest.writeInt(0);
         }
         dest.writeInt(mLightColor);
+        dest.writeInt(mLightOnTime);
+        dest.writeInt(mLightOffTime);
         dest.writeBoolean(mBlockableSystem);
         dest.writeInt(mAllowBubbles);
         dest.writeInt(mOriginalImportance);
@@ -590,6 +600,30 @@ public final class NotificationChannel implements Parcelable {
      */
     public void setLightColor(int argb) {
         this.mLightColor = argb;
+    }
+
+    /**
+     * Sets the notification light ON time for notifications posted to this channel, if lights are
+     * {@link #enableLights(boolean) enabled} on this channel and the device supports that feature.
+     *
+     * Only modifiable before the channel is submitted to
+     * {@link NotificationManager#notify(String, int, Notification)}.
+     * @hide
+     */
+    public void setLightOnTime(int time) {
+        this.mLightOnTime = time;
+    }
+
+    /**
+     * Sets the notification light OFF time for notifications posted to this channel, if lights are
+     * {@link #enableLights(boolean) enabled} on this channel and the device supports that feature.
+     *
+     * Only modifiable before the channel is submitted to
+     * {@link NotificationManager#notify(String, int, Notification)}.
+     * @hide
+     */
+    public void setLightOffTime(int time) {
+        this.mLightOffTime = time;
     }
 
     /**
@@ -823,6 +857,24 @@ public final class NotificationChannel implements Parcelable {
      */
     public int getLightColor() {
         return mLightColor;
+    }
+
+    /**
+     * Returns the notification light ON time for notifications posted to this channel. Irrelevant
+     * unless {@link #shouldShowLights()}.
+     * @hide
+     */
+    public int getLightOnTime() {
+        return mLightOnTime;
+    }
+
+    /**
+     * Returns the notification light OFF time for notifications posted to this channel. Irrelevant
+     * unless {@link #shouldShowLights()}.
+     * @hide
+     */
+    public int getLightOffTime() {
+        return mLightOffTime;
     }
 
     /**
@@ -1091,6 +1143,8 @@ public final class NotificationChannel implements Parcelable {
         // Set the pattern before the effect, so that we can properly handle cases where the pattern
         // is null, but the effect is not null (i.e. for non-waveform VibrationEffects - the ones
         // which cannot be represented as a vibration pattern).
+        setLightOnTime(safeInt(parser, ATT_ON_TIME, DEFAULT_ON_TIME));
+        setLightOffTime(safeInt(parser, ATT_OFF_TIME, DEFAULT_OFF_TIME));
         setVibrationPattern(safeLongArray(parser, ATT_VIBRATION, null));
         if (Flags.notificationChannelVibrationEffectApi()) {
             VibrationEffect vibrationEffect = safeVibrationEffect(parser, ATT_VIBRATION_EFFECT);
@@ -1283,6 +1337,12 @@ public final class NotificationChannel implements Parcelable {
         if (getLightColor() != DEFAULT_LIGHT_COLOR) {
             out.attributeInt(null, ATT_LIGHT_COLOR, getLightColor());
         }
+        if (getLightOnTime() != DEFAULT_ON_TIME) {
+            out.attribute(null, ATT_ON_TIME, Integer.toString(getLightOnTime()));
+        }
+        if (getLightOffTime() != DEFAULT_OFF_TIME) {
+            out.attribute(null, ATT_OFF_TIME, Integer.toString(getLightOffTime()));
+        }
         if (shouldVibrate()) {
             out.attributeBoolean(null, ATT_VIBRATION_ENABLED, shouldVibrate());
         }
@@ -1368,6 +1428,8 @@ public final class NotificationChannel implements Parcelable {
         }
         record.put(ATT_LIGHTS, Boolean.toString(shouldShowLights()));
         record.put(ATT_LIGHT_COLOR, Integer.toString(getLightColor()));
+        record.put(ATT_ON_TIME, Integer.toString(getLightOnTime()));
+        record.put(ATT_OFF_TIME, Integer.toString(getLightOffTime()));
         record.put(ATT_VIBRATION_ENABLED, Boolean.toString(shouldVibrate()));
         record.put(ATT_USER_LOCKED, Integer.toString(getUserLockedFields()));
         record.put(ATT_FG_SERVICE_SHOWN, Boolean.toString(isUserVisibleTaskShown()));
@@ -1488,6 +1550,8 @@ public final class NotificationChannel implements Parcelable {
                 && getLockscreenVisibility() == that.getLockscreenVisibility()
                 && mLights == that.mLights
                 && getLightColor() == that.getLightColor()
+                && getLightOnTime() == that.getLightOnTime()
+                && getLightOffTime()== that.getLightOffTime()
                 && getUserLockedFields() == that.getUserLockedFields()
                 && isUserVisibleTaskShown() == that.isUserVisibleTaskShown()
                 && mVibrationEnabled == that.mVibrationEnabled
@@ -1515,7 +1579,7 @@ public final class NotificationChannel implements Parcelable {
     @Override
     public int hashCode() {
         int result = Objects.hash(getId(), getName(), mDesc, getImportance(), mBypassDnd,
-                getLockscreenVisibility(), getSound(), mLights, getLightColor(),
+                getLockscreenVisibility(), getSound(), mLights, getLightColor(),getLightOnTime(),getLightOffTime(),
                 getUserLockedFields(), isUserVisibleTaskShown(),
                 mVibrationEnabled, mShowBadge, isDeleted(), getDeletedTimeMs(),
                 getGroup(), getAudioAttributes(), isBlockable(), mAllowBubbles,
@@ -1553,6 +1617,8 @@ public final class NotificationChannel implements Parcelable {
                 + ", mSound=" + mSound
                 + ", mLights=" + mLights
                 + ", mLightColor=" + mLightColor
+                + ", mLightOnTime=" + mLightOnTime
+                + ", mLightOffTime=" + mLightOffTime
                 + ", mVibrationPattern=" + Arrays.toString(mVibrationPattern)
                 + ", mVibrationEffect="
                         + (mVibrationEffect == null ? "null" : mVibrationEffect.toString())
