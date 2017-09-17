@@ -165,4 +165,9 @@
     <!-- Whether Pixel props is enabled -->
     <java-symbol type="bool" name="config_enablePixelProps" />
 
+    <!-- Battery light customization -->
+    <java-symbol type="bool" name="config_hasNotificationLed" />
+    <java-symbol type="bool" name="config_intrusiveBatteryLed" />
+    <java-symbol type="bool" name="config_ledCanPulse" />
+
 </resources>
