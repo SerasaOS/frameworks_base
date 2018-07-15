@@ -273,6 +273,7 @@ public class SecureSettings {
         Settings.Secure.VISUAL_QUERY_ACCESSIBILITY_DETECTION_ENABLED,
         Settings.Secure.QS_SHOW_BRIGHTNESS,
         Settings.Secure.QS_BRIGHTNESS_POSITION_BOTTOM,
-        Settings.Secure.QS_SHOW_AUTO_BRIGHTNESS_BUTTON
+        Settings.Secure.QS_SHOW_AUTO_BRIGHTNESS_BUTTON,
+        Settings.Secure.STATUS_BAR_CLOCK_POSITION
     };
 }
