@@ -270,6 +270,7 @@ public class SecureSettings {
         Settings.Secure.DOZE_TAP_GESTURE_AMBIENT,
         Settings.Secure.STYLUS_POINTER_ICON_ENABLED,
         Settings.Secure.CAMERA_EXTENSIONS_FALLBACK,
+        Settings.Secure.STATUS_BAR_CLOCK_POSITION,
         Settings.Secure.VISUAL_QUERY_ACCESSIBILITY_DETECTION_ENABLED
     };
 }
