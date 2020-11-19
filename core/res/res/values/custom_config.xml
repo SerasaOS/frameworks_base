@@ -162,6 +162,9 @@
          Used to decide if we show pulse settings -->
     <bool name="config_ledCanPulse">true</bool>
 
+    <!-- Whether Pixel props is enabled -->
+    <bool name="config_enablePixelProps">true</bool>
+
     <!-- These are system packages exempted from privacy indicator -->
     <string-array name="config_indicatorExemptedPackageNames" translatable="false">
         <item>com.android.bluetooth</item>
