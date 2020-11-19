@@ -152,6 +152,9 @@
     <!-- Expected value from fast charging status file  -->
     <string name="config_oemFastChargerStatusValue" translatable="false"></string>
 
+    <!-- Whether Pixel props is enabled -->
+    <bool name="config_enablePixelProps">true</bool>
+
     <!-- These are system packages exempted from privacy indicator -->
     <string-array name="config_indicatorExemptedPackageNames" translatable="false">
         <item>com.android.bluetooth</item>
