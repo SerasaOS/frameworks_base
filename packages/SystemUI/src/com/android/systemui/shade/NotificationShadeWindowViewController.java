@@ -21,10 +21,12 @@ import static com.android.systemui.flags.Flags.LOCKSCREEN_WALLPAPER_DREAM_ENABLE
 import static com.android.systemui.flags.Flags.TRACKPAD_GESTURE_COMMON;
 import static com.android.systemui.statusbar.StatusBarState.KEYGUARD;
 import static com.android.systemui.util.kotlin.JavaAdapterKt.collectFlow;
+import static com.android.systemui.qs.QSPanel.QS_SHOW_AUTO_BRIGHTNESS_BUTTON;
 
 import android.app.StatusBarManager;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.widget.ImageView;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -140,6 +142,8 @@ public class NotificationShadeWindowViewController implements Dumpable {
     private final NotificationPanelViewController mNotificationPanelViewController;
     private final ShadeExpansionStateManager mShadeExpansionStateManager;
 
+    private ImageView mAutoBrightnessIcon;
+    private boolean mShowAutoBrightnessButton;
     private boolean mIsTrackingBarGesture = false;
     private boolean mIsOcclusionTransitionRunning = false;
     private DisableSubpixelTextTransitionListener mDisableSubpixelTextTransitionListener;
@@ -226,6 +230,10 @@ public class NotificationShadeWindowViewController implements Dumpable {
 
         // This view is not part of the newly inflated expanded status bar.
         mBrightnessMirror = mView.findViewById(R.id.brightness_mirror_container);
+        mAutoBrightnessIcon = (ImageView)
+                mBrightnessMirror.findViewById(R.id.brightness_icon);
+        mShowAutoBrightnessButton = mTunerService.getValue(
+                QS_SHOW_AUTO_BRIGHTNESS_BUTTON, 1) == 1;
         mDisableSubpixelTextTransitionListener = new DisableSubpixelTextTransitionListener(mView);
         bouncerViewBinder.bind(mView.findViewById(R.id.keyguard_bouncer_container));
 
@@ -603,6 +611,10 @@ public class NotificationShadeWindowViewController implements Dumpable {
             public void onChildViewAdded(View parent, View child) {
                 if (child.getId() == R.id.brightness_mirror_container) {
                     mBrightnessMirror = child;
+                    mAutoBrightnessIcon = (ImageView)
+                            child.findViewById(R.id.brightness_icon);
+                    mAutoBrightnessIcon.setVisibility(!mShowAutoBrightnessButton
+                            ? View.GONE : View.VISIBLE);
                 }
             }
 
