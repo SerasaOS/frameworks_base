@@ -13,15 +13,14 @@
 -->
 <resources>
 
-    <!-- Pocket Mode -->
-    <dimen name="pocket_view_img_height">350dp</dimen>
-    <dimen name="pocket_view_img_width">175dp</dimen>
-    <dimen name="pocket_view_img_margin_top">56dp</dimen>
-    <dimen name="pocket_view_title_size">24sp</dimen>
-    <dimen name="pocket_view_title_margin_horizontal">56dp</dimen>
-    <dimen name="pocket_view_title_cancel_size">16sp</dimen>
-    <dimen name="pocket_view_title_cancel_margin_top">56dp</dimen>
-    <dimen name="pocket_view_cancel_margin_horizontal">24dp</dimen>
-    <dimen name="pocket_view_top_tag_size">14sp</dimen>
-    <dimen name="pocket_view_top_tag_margin_top">8dp</dimen>
+    <!-- Parallel space badge colors -->
+    <color name="parallel_badge_1">#025fee</color>
+    <color name="parallel_badge_2">#ee9002</color>
+    <color name="parallel_badge_3">#02d6ee</color>
+    <color name="parallel_badge_4">#9002ee</color>
+    <color name="parallel_badge_5">#ee0260</color>
+    <color name="parallel_badge_6">#00b200</color>
+    <color name="parallel_badge_7">#7200b6</color>
+    <color name="parallel_badge_8">#006f72</color>
+    <color name="parallel_badge_9">#eed315</color>
 </resources>
