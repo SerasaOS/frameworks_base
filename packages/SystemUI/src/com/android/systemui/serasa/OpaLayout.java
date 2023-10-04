@@ -1,4 +1,4 @@
-package com.android.systemui.spark;
+package com.android.systemui.serasa;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

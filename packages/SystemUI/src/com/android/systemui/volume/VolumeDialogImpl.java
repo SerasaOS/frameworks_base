@@ -157,7 +157,7 @@ import com.android.systemui.util.RoundedCornerProgressDrawable;
 
 import lineageos.providers.LineageSettings;
 
-import com.android.internal.util.spark.ThemeUtils;
+import com.android.internal.util.serasa.ThemeUtils;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;

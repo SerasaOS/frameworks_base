@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.spark.onthego;
+package com.android.systemui.serasa.onthego;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -42,7 +42,7 @@ import android.widget.FrameLayout;
 
 import com.android.systemui.R;
 
-import com.android.internal.util.spark.OnTheGoUtils;
+import com.android.internal.util.serasa.OnTheGoUtils;
 
 import java.io.IOException;
 
@@ -354,7 +354,7 @@ public class OnTheGoService extends Service {
 
         if (type == 1 || type == 2) {
             final ComponentName cn = new ComponentName("com.android.systemui",
-                    "com.android.systemui.spark.onthego.OnTheGoService");
+                    "com.android.systemui.serasa.onthego.OnTheGoService");
             final Intent startIntent = new Intent();
             startIntent.setComponent(cn);
             startIntent.setAction(ACTION_START);
