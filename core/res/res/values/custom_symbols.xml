@@ -46,7 +46,6 @@
     <!-- PropImitationHooks -->
     <java-symbol type="array" name="config_certifiedBuildProperties" />
     <java-symbol type="string" name="config_stockFingerprint" />
-    <java-symbol type="string" name="config_netflixSpoofModel" />
 
     <!-- Alert Slider -->
     <java-symbol type="string" name="alert_slider_state_path" />
