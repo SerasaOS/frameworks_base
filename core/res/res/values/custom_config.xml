@@ -75,10 +75,6 @@
     <!-- Device model (Build.MODEL) to spoof for netflix, if not empty -->
     <string name="config_netflixSpoofModel" translatable="false"></string>
 
-    <!-- Whether to spoof device as pixel for certain google apps, to
-         unlock pixel-exclusive features -->
-    <bool name="config_spoofGoogleApps">true</bool>
-
     <!-- Whether device has an alert slider. -->
     <bool name="config_hasAlertSlider">false</bool>
 
