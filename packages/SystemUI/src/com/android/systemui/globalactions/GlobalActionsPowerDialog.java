@@ -20,7 +20,6 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import android.annotation.NonNull;
 import android.app.Dialog;
 import android.content.Context;
-import android.view.CrossWindowBlurListeners;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +31,6 @@ import android.widget.LinearLayout;
 import com.android.systemui.MultiListLayout;
 import com.android.systemui.MultiListLayout.MultiListAdapter;
 import com.android.systemui.R;
-import com.android.systemui.statusbar.BlurUtils;
-import com.android.systemui.dump.DumpManager;
 
 /**
  * Creates a customized Dialog for displaying the Shut Down and Restart actions.
@@ -91,23 +88,8 @@ public class GlobalActionsPowerDialog {
             LayoutParams.FLAG_HARDWARE_ACCELERATED
         );
 
-        Dialog dialog = new Dialog(context,
-                com.android.systemui.R.style.Theme_SystemUI_Dialog_GlobalActionsLite);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(listView);
-
-        BlurUtils blurUtils = new BlurUtils(context.getResources(),
-                CrossWindowBlurListeners.getInstance(), new DumpManager());
-
-        Window window = dialog.getWindow();
-        window.setType(WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY);
-        window.setTitle(""); // prevent Talkback from speaking first item name twice
-        window.setBackgroundDrawable(res.getDrawable(
-                com.android.systemui.res.R.drawable.global_actions_lite_background,
-                context.getTheme()));
-        window.addFlags(WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
-        window.setDimAmount(blurUtils.supportsBlursOnWindows() ? 0.54f : 0.88f);
-
+        dialog.setContentView(view);
         return dialog;
     }
 }

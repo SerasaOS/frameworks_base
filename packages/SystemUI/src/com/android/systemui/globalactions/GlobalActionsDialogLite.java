@@ -2551,7 +2551,11 @@ public class GlobalActionsDialogLite implements DialogInterface.OnDismissListene
                 mBackgroundDrawable = new ScrimDrawable();
             }
 
-            getWindow().setDimAmount(mBlurUtils.supportsBlursOnWindows() ? 0.54f : 0.88f);
+            float bgAlpha = 0.88f;
+            if (mBlurUtils.supportsBlursOnWindows()) {
+                bgAlpha = 0.54f;
+            }
+            getWindow().setDimAmount(bgAlpha);
 
             // If user entered from the lock screen and smart lock was enabled, disable it
             int user = mSelectedUserInteractor.getSelectedUserId();
