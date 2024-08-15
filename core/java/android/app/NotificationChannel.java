@@ -264,8 +264,8 @@ public final class NotificationChannel implements Parcelable {
     private boolean mSoundRestored = false;
     private boolean mLights;
     private int mLightColor = DEFAULT_LIGHT_COLOR;
-    private static final int DEFAULT_ON_TIME = 0;
-    private static final int DEFAULT_OFF_TIME = 0;
+    private int mLightOnTime = DEFAULT_ON_TIME;
+   private int mLightOffTime = DEFAULT_OFF_TIME;
     private long[] mVibrationPattern;
     private VibrationEffect mVibrationEffect;
     // Bitwise representation of fields that have been changed by the user, preventing the app from

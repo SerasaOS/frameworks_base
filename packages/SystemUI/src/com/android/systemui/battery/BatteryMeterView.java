@@ -101,7 +101,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
     private boolean mIsBatteryDefender;
     private boolean mIsIncompatibleCharging;
     private boolean mDisplayShieldEnabled;
-    private boolean mPowerSaveEnabled;
     // Error state where we know nothing about the current battery state
     private boolean mBatteryStateUnknown;
     // Lazily-loaded since this is expected to be a rare-if-ever state
@@ -279,6 +278,8 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
      * @param pluggedIn whether the device is plugged in or not
      */
     public void onBatteryLevelChanged(@IntRange(from = 0, to = 100) int level, boolean pluggedIn) {
+        boolean wasCharging = isCharging();
+        boolean isCharging = isCharging();
         if (mLevel != level) {
             mLevel = level;
             mAccessorizedDrawable.setBatteryLevel(mLevel);
@@ -294,7 +295,6 @@ public class BatteryMeterView extends LinearLayout implements DarkReceiver {
         } else {
             updatePercentText();
         }
-    }
 
         if (newStatusBarIcons()) {
             Drawable attr = mUnifiedBatteryState.getAttribution();
